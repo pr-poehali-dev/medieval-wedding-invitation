@@ -140,7 +140,11 @@ export default function Index() {
           </div>
 
           <div className="mt-10 animate-float-in" style={{ animationDelay: "0.6s" }}>
-            <a href="#confirm" className="btn-tavern inline-block px-12 py-4 rounded-sm text-sm">
+            <a
+              href="#confirm"
+              className="btn-tavern inline-block px-12 py-4 rounded-sm text-sm"
+              style={{ boxShadow: "0 4px 30px rgba(0,0,0,0.8), 0 0 40px rgba(201,147,58,0.4), inset 0 1px 0 rgba(255,255,255,0.2)" }}
+            >
               Подтвердить участие
             </a>
           </div>
@@ -233,6 +237,36 @@ export default function Index() {
             <div className="p-4 rounded-sm text-center" style={{ background: "rgba(201,147,58,0.08)", border: "1px solid rgba(201,147,58,0.2)" }}>
               <p className="font-cormorant italic text-base" style={{ color: "var(--tavern-parchment)", opacity: 0.8 }}>
                 ✨ Можно добавить средневековые аксессуары — накидки, пояса, украшения
+              </p>
+            </div>
+          </Scroll>
+        </div>
+      </section>
+
+      {/* ── ПОДАРКИ ── */}
+      <section id="gifts" className="py-8 px-4">
+        <div className="max-w-2xl mx-auto">
+          <Scroll className="text-center">
+            <p className="font-cinzel text-xs tracking-[0.4em] uppercase mb-2" style={{ color: "var(--tavern-gold)", opacity: 0.65 }}>Глава четвёртая</p>
+            <h2 className="font-cinzel font-bold text-3xl mb-4" style={{ color: "var(--tavern-gold-bright)" }}>Подарки</h2>
+            <div className="w-14 h-14 mx-auto mb-5 rounded-sm flex items-center justify-center"
+              style={{ background: "rgba(201,147,58,0.1)", border: "1px solid rgba(201,147,58,0.3)" }}>
+              <Icon name="Gift" size={24} style={{ color: "var(--tavern-gold)" }} />
+            </div>
+            <p className="font-cormorant text-xl leading-relaxed mb-5" style={{ color: "var(--tavern-parchment)", opacity: 0.85 }}>
+              Главное для нас — видеть вас рядом в этот особенный день.
+            </p>
+            <div className="flex items-center justify-center gap-3 mb-5">
+              <div style={{ flex: 1, height: 1, background: "linear-gradient(90deg, transparent, rgba(201,147,58,0.5), transparent)" }} />
+              <span style={{ color: "var(--tavern-gold)", fontSize: "0.9rem" }}>❧ ✦ ❧</span>
+              <div style={{ flex: 1, height: 1, background: "linear-gradient(90deg, transparent, rgba(201,147,58,0.5), transparent)" }} />
+            </div>
+            <p className="font-cormorant italic text-lg leading-relaxed mb-4" style={{ color: "var(--tavern-parchment)", opacity: 0.75 }}>
+              А если вы захотите порадовать нас подарком, мы с благодарностью примем денежный вклад.
+            </p>
+            <div className="p-4 rounded-sm" style={{ background: "rgba(201,147,58,0.08)", border: "1px solid rgba(201,147,58,0.2)" }}>
+              <p className="font-cormorant italic text-base" style={{ color: "var(--tavern-parchment)", opacity: 0.7 }}>
+                🌿 Будем очень признательны, если вы откажетесь от цветов
               </p>
             </div>
           </Scroll>
