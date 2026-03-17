@@ -4,6 +4,8 @@ import Icon from "@/components/ui/icon";
 const RSVP_URL = "https://functions.poehali.dev/a142cd63-6a0a-4a44-aff4-d06fdbe145c3";
 
 const COAT_OF_ARMS = "https://cdn.poehali.dev/projects/0aa96c6b-dbcc-48a7-8de0-43fa7dddae32/files/ebe40a92-1060-4836-a8b7-9dede641bd38.jpg";
+const BG_IMAGE = "https://cdn.poehali.dev/projects/0aa96c6b-dbcc-48a7-8de0-43fa7dddae32/files/44d52ba6-e484-41f6-8fce-4c03d0fc95d0.jpg";
+const UPLOAD_IMAGE = "https://cdn.poehali.dev/projects/0aa96c6b-dbcc-48a7-8de0-43fa7dddae32/bucket/c6ec3376-803b-4fa7-bcba-3ca75234a1e5.png";
 
 const SCHEDULE = [
   { time: "12:00", icon: "Crown", title: "Церемония в ЗАГСе", desc: "Торжественная регистрация союза" },
@@ -16,6 +18,32 @@ const DRESSCODE = [
   { color: "#c9b99a", name: "Бежевый", desc: "Цвет пергамента и песка" },
   { color: "#2d4a35", name: "Тёмно-зелёный", desc: "Цвет леса и мха" },
 ];
+
+/* Пергаментная карточка */
+const Scroll = ({ children, className = "" }: { children: React.ReactNode; className?: string }) => (
+  <div
+    className={`relative rounded-sm px-8 py-7 ${className}`}
+    style={{
+      background: "linear-gradient(160deg, #e8d5a8 0%, #d4b87a 30%, #c8a660 60%, #d2b47a 85%, #e4d0a4 100%)",
+      boxShadow: "0 8px 40px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,255,0.3), inset 0 -2px 0 rgba(0,0,0,0.15)",
+      border: "1px solid rgba(139,90,40,0.5)",
+    }}
+  >
+    {/* torn edge top */}
+    <div className="absolute top-0 left-0 right-0 h-2 overflow-hidden" style={{ borderRadius: "4px 4px 0 0" }}>
+      <svg viewBox="0 0 400 8" preserveAspectRatio="none" className="w-full h-full" style={{ opacity: 0.4 }}>
+        <path d="M0,8 Q20,2 40,6 Q60,1 80,5 Q100,8 120,3 Q140,0 160,5 Q180,8 200,2 Q220,6 240,3 Q260,7 280,1 Q300,5 320,4 Q340,8 360,2 Q380,6 400,4 L400,0 L0,0 Z" fill="#6b3a1f"/>
+      </svg>
+    </div>
+    {/* torn edge bottom */}
+    <div className="absolute bottom-0 left-0 right-0 h-2 overflow-hidden" style={{ borderRadius: "0 0 4px 4px" }}>
+      <svg viewBox="0 0 400 8" preserveAspectRatio="none" className="w-full h-full" style={{ opacity: 0.4 }}>
+        <path d="M0,0 Q20,6 40,2 Q60,7 80,3 Q100,0 120,5 Q140,8 160,3 Q180,0 200,6 Q220,2 240,5 Q260,1 280,7 Q300,3 320,4 Q340,0 360,6 Q380,2 400,4 L400,8 L0,8 Z" fill="#6b3a1f"/>
+      </svg>
+    </div>
+    {children}
+  </div>
+);
 
 export default function Index() {
   const [form, setForm] = useState({ name: "", guests: "1", coming: "yes", dietary: "" });
@@ -47,180 +75,198 @@ export default function Index() {
   };
 
   return (
-    <div className="min-h-screen" style={{ background: "linear-gradient(180deg, #1a0e06 0%, #2a1a0e 20%, #1e1209 80%, #100a04 100%)" }}>
+    <div
+      className="min-h-screen"
+      style={{
+        background: `url(${UPLOAD_IMAGE}) center top / cover no-repeat fixed`,
+        backgroundColor: "#1a0e06",
+      }}
+    >
+      {/* dark overlay for readability */}
+      <div className="min-h-screen" style={{ background: "rgba(10,5,0,0.18)" }}>
 
       {/* ── HERO ── */}
-      <section className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden px-4 py-20">
-        <div className="absolute inset-0 pointer-events-none">
-          <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[600px] h-[600px] rounded-full opacity-20"
-            style={{ background: "radial-gradient(circle, #c9933a 0%, transparent 70%)" }} />
+      <section className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden px-4 py-16">
+
+        {/* Мечи сверху */}
+        <div className="absolute top-6 left-1/2 -translate-x-1/2 flex items-center gap-2 z-20">
+          <span className="font-cinzel text-xs tracking-[0.4em] uppercase" style={{ color: "var(--tavern-gold)", opacity: 0.8, textShadow: "0 2px 8px rgba(0,0,0,0.9)" }}>⚔</span>
+          <span className="font-cinzel text-xs tracking-[0.4em] uppercase" style={{ color: "var(--tavern-gold)", opacity: 0.5 }}>✦ ✦ ✦</span>
+          <span className="font-cinzel text-xs tracking-[0.4em] uppercase" style={{ color: "var(--tavern-gold)", opacity: 0.8, textShadow: "0 2px 8px rgba(0,0,0,0.9)" }}>⚔</span>
         </div>
 
-        <div className="relative z-10 w-full max-w-2xl text-center animate-float-in" style={{ animationDelay: "0s" }}>
-          <p className="font-cinzel text-xs tracking-[0.5em] uppercase mb-8" style={{ color: "var(--tavern-gold)", opacity: 0.7 }}>
-            Свиток приглашения
-          </p>
+        <div className="relative z-10 w-full max-w-2xl text-center animate-float-in">
 
-          <div className="relative mx-auto w-44 h-44 mb-8 animate-float-in" style={{ animationDelay: "0.2s" }}>
+          {/* Свиток-шапка с именами */}
+          <Scroll className="mb-8">
+            <p className="font-cinzel text-xs tracking-[0.4em] uppercase mb-3" style={{ color: "#5c3010", opacity: 0.7 }}>
+              Приглашение на свадьбу
+            </p>
+            <h1 className="font-cinzel font-black leading-tight mb-2" style={{ fontSize: "clamp(2.2rem, 7vw, 4.5rem)", color: "#3d1a05", textShadow: "0 2px 4px rgba(0,0,0,0.2)" }}>
+              Катерина &amp; Кирилл
+            </h1>
+            <div className="flex items-center justify-center gap-3 mt-3">
+              <div style={{ flex: 1, height: 1, background: "linear-gradient(90deg, transparent, #8b5a28, transparent)" }} />
+              <span className="font-cormorant italic text-lg" style={{ color: "#6b3a18", whiteSpace: "nowrap" }}>08 августа 2026 года</span>
+              <div style={{ flex: 1, height: 1, background: "linear-gradient(90deg, transparent, #8b5a28, transparent)" }} />
+            </div>
+          </Scroll>
+
+          {/* герб */}
+          <div className="relative mx-auto w-36 h-36 mb-8 animate-float-in" style={{ animationDelay: "0.2s" }}>
             <div className="absolute inset-0 rounded-full animate-glow-pulse" />
             <img
               src={COAT_OF_ARMS}
               alt="Герб"
-              className="w-full h-full object-cover rounded-full border-2"
-              style={{ borderColor: "var(--tavern-gold)", boxShadow: "0 0 40px rgba(201,147,58,0.3), 0 0 0 4px rgba(201,147,58,0.1)" }}
+              className="w-full h-full object-cover rounded-full border-4"
+              style={{
+                borderColor: "var(--tavern-gold)",
+                boxShadow: "0 0 50px rgba(201,147,58,0.5), 0 0 0 2px rgba(201,147,58,0.2), 0 8px 30px rgba(0,0,0,0.8)"
+              }}
             />
           </div>
 
-          <div className="animate-float-in" style={{ animationDelay: "0.35s" }}>
-            <h1 className="font-cinzel font-black leading-none mb-2" style={{ fontSize: "clamp(2.8rem, 8vw, 5.5rem)", color: "var(--tavern-gold-bright)", textShadow: "0 0 30px rgba(232,184,75,0.4), 0 4px 8px rgba(0,0,0,0.8)" }}>
-              Катерина
-            </h1>
-            <p className="font-cormorant italic text-2xl mb-2" style={{ color: "var(--tavern-parchment)", opacity: 0.6 }}>&amp;</p>
-            <h1 className="font-cinzel font-black leading-none mb-8" style={{ fontSize: "clamp(2.8rem, 8vw, 5.5rem)", color: "var(--tavern-gold-bright)", textShadow: "0 0 30px rgba(232,184,75,0.4), 0 4px 8px rgba(0,0,0,0.8)" }}>
-              Кирилл
-            </h1>
+          {/* подпись */}
+          <div className="animate-float-in" style={{ animationDelay: "0.4s" }}>
+            <Scroll>
+              <p className="font-cinzel text-base leading-relaxed mb-1" style={{ color: "#3d1a05", lineHeight: 1.7 }}>
+                Дорогие друзья!
+              </p>
+              <p className="font-cormorant italic text-xl leading-relaxed" style={{ color: "#5c3010" }}>
+                Приглашаем вас разделить с нами этот важный день<br />и отметить его незабываемо вместе!
+              </p>
+            </Scroll>
           </div>
 
-          <div className="ornament-line mb-6 animate-float-in" style={{ animationDelay: "0.45s" }}>
-            <span className="font-cinzel text-sm tracking-widest" style={{ color: "var(--tavern-gold)", whiteSpace: "nowrap" }}>
-              08 · 08 · 2026
-            </span>
-          </div>
-
-          <p className="font-cormorant italic text-xl leading-relaxed animate-float-in" style={{ color: "var(--tavern-parchment)", opacity: 0.8, animationDelay: "0.55s" }}>
-            Двое странников встретили свою судьбу<br />и зовут тебя разделить этот час с ними
-          </p>
-
-          <div className="mt-10 animate-float-in" style={{ animationDelay: "0.65s" }}>
-            <a href="#confirm" className="btn-tavern inline-block px-10 py-4 rounded-sm">
-              Принять приглашение
+          <div className="mt-10 animate-float-in" style={{ animationDelay: "0.6s" }}>
+            <a href="#confirm" className="btn-tavern inline-block px-12 py-4 rounded-sm text-sm">
+              Подтвердить участие
             </a>
           </div>
 
-          <div className="mt-16 animate-float-in" style={{ animationDelay: "0.75s" }}>
-            <Icon name="ChevronDown" size={24} className="mx-auto animate-bounce" style={{ color: "var(--tavern-gold)", opacity: 0.4 } as React.CSSProperties} />
+          <div className="mt-12 animate-float-in" style={{ animationDelay: "0.75s" }}>
+            <Icon name="ChevronDown" size={24} className="mx-auto animate-bounce" style={{ color: "var(--tavern-gold)", opacity: 0.6 } as React.CSSProperties} />
           </div>
         </div>
       </section>
 
       {/* ── ПРОГРАММА ── */}
-      <section id="program" className="py-20 px-4">
+      <section id="program" className="py-16 px-4">
         <div className="max-w-2xl mx-auto">
-          <div className="text-center mb-14">
-            <p className="font-cinzel text-xs tracking-[0.4em] uppercase mb-4" style={{ color: "var(--tavern-gold)", opacity: 0.6 }}>Глава первая</p>
-            <h2 className="font-cinzel font-bold text-4xl gold-text mb-3">Программа дня</h2>
-            <div className="rune-divider text-center" />
-          </div>
-
-          <div className="section-card rounded-sm p-8 space-y-8">
-            {SCHEDULE.map((item, i) => (
-              <div key={i} className="timeline-item">
-                <div className="flex items-start gap-5">
-                  <div className="shrink-0 w-14 h-14 rounded-sm flex items-center justify-center"
-                    style={{ background: "linear-gradient(145deg, var(--tavern-green), var(--tavern-green-light))", border: "1px solid rgba(201,147,58,0.3)" }}>
-                    <Icon name={item.icon} size={22} style={{ color: "var(--tavern-gold)" }} />
-                  </div>
-                  <div>
-                    <span className="font-cinzel text-lg font-semibold gold-text">{item.time}</span>
-                    <h3 className="font-cinzel text-base font-medium mt-0.5" style={{ color: "var(--tavern-parchment)" }}>{item.title}</h3>
-                    <p className="font-cormorant italic text-lg mt-1" style={{ color: "var(--tavern-parchment)", opacity: 0.6 }}>{item.desc}</p>
-                  </div>
-                </div>
+          <div className="text-center mb-10">
+            <Scroll>
+              <p className="font-cinzel text-xs tracking-[0.4em] uppercase mb-2" style={{ color: "#5c3010", opacity: 0.65 }}>Глава первая</p>
+              <h2 className="font-cinzel font-bold text-3xl mb-1" style={{ color: "#3d1a05" }}>Программа дня</h2>
+              <div className="flex items-center justify-center gap-2 mt-2">
+                <div style={{ flex: 1, height: 1, background: "linear-gradient(90deg, transparent, #8b5a28, transparent)" }} />
+                <span style={{ color: "#8b5a28", fontSize: "0.9rem" }}>❧ ✦ ❧</span>
+                <div style={{ flex: 1, height: 1, background: "linear-gradient(90deg, transparent, #8b5a28, transparent)" }} />
               </div>
-            ))}
+
+              <div className="mt-6 space-y-5">
+                {SCHEDULE.map((item, i) => (
+                  <div key={i} className="flex items-start gap-4 text-left">
+                    <div className="shrink-0 w-12 h-12 rounded-sm flex items-center justify-center"
+                      style={{ background: "rgba(93,50,10,0.12)", border: "1px solid rgba(139,90,40,0.35)" }}>
+                      <Icon name={item.icon} size={20} style={{ color: "#6b3a18" }} />
+                    </div>
+                    <div>
+                      <span className="font-cinzel text-base font-bold" style={{ color: "#3d1a05" }}>{item.time}</span>
+                      <h3 className="font-cinzel text-sm font-medium" style={{ color: "#5c3010" }}>{item.title}</h3>
+                      <p className="font-cormorant italic text-base" style={{ color: "#7a4a20", opacity: 0.8 }}>{item.desc}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </Scroll>
           </div>
         </div>
       </section>
 
       {/* ── МЕСТО ── */}
-      <section id="place" className="py-20 px-4">
+      <section id="place" className="py-8 px-4">
         <div className="max-w-2xl mx-auto">
-          <div className="text-center mb-14">
-            <p className="font-cinzel text-xs tracking-[0.4em] uppercase mb-4" style={{ color: "var(--tavern-gold)", opacity: 0.6 }}>Глава вторая</p>
-            <h2 className="font-cinzel font-bold text-4xl gold-text mb-3">Место пира</h2>
-            <div className="rune-divider text-center" />
-          </div>
-
-          <div className="section-card rounded-sm p-8 text-center">
-            <div className="w-16 h-16 mx-auto mb-6 rounded-sm flex items-center justify-center"
-              style={{ background: "linear-gradient(145deg, var(--tavern-green), var(--tavern-green-light))", border: "1px solid rgba(201,147,58,0.3)" }}>
-              <Icon name="MapPin" size={28} style={{ color: "var(--tavern-gold)" }} />
+          <Scroll className="text-center">
+            <p className="font-cinzel text-xs tracking-[0.4em] uppercase mb-2" style={{ color: "#5c3010", opacity: 0.65 }}>Глава вторая</p>
+            <h2 className="font-cinzel font-bold text-3xl mb-4" style={{ color: "#3d1a05" }}>Место пира</h2>
+            <div className="w-14 h-14 mx-auto mb-4 rounded-sm flex items-center justify-center"
+              style={{ background: "rgba(93,50,10,0.12)", border: "1px solid rgba(139,90,40,0.35)" }}>
+              <Icon name="MapPin" size={24} style={{ color: "#6b3a18" }} />
             </div>
-            <h3 className="font-cinzel text-2xl font-bold mb-2" style={{ color: "var(--tavern-gold-bright)" }}>НеКлуб</h3>
-            <p className="font-cormorant italic text-xl mb-6" style={{ color: "var(--tavern-parchment)", opacity: 0.7 }}>
+            <h3 className="font-cinzel text-2xl font-bold mb-1" style={{ color: "#3d1a05" }}>НеКлуб</h3>
+            <p className="font-cormorant italic text-xl mb-4" style={{ color: "#5c3010" }}>
               ул. Коммуны, 14
             </p>
-            <div className="ornament-line mb-6">
-              <span className="font-cormorant text-base" style={{ color: "var(--tavern-parchment)", opacity: 0.5 }}>Начало торжества в 15:00</span>
+            <div className="flex items-center justify-center gap-3 mb-4">
+              <div style={{ flex: 1, height: 1, background: "linear-gradient(90deg, transparent, #8b5a28, transparent)" }} />
+              <span className="font-cormorant text-base" style={{ color: "#7a4a20" }}>Начало торжества в 15:00</span>
+              <div style={{ flex: 1, height: 1, background: "linear-gradient(90deg, transparent, #8b5a28, transparent)" }} />
             </div>
-            <p className="font-cormorant text-lg leading-relaxed" style={{ color: "var(--tavern-parchment)", opacity: 0.65 }}>
+            <p className="font-cormorant text-lg leading-relaxed" style={{ color: "#5c3010", opacity: 0.85 }}>
               Великолепный зал ждёт отважных гостей.<br />
               Врата откроются ровно в назначенный час.
             </p>
-          </div>
+          </Scroll>
         </div>
       </section>
 
       {/* ── ДРЕСС-КОД ── */}
-      <section id="dresscode" className="py-20 px-4">
+      <section id="dresscode" className="py-16 px-4">
         <div className="max-w-2xl mx-auto">
-          <div className="text-center mb-14">
-            <p className="font-cinzel text-xs tracking-[0.4em] uppercase mb-4" style={{ color: "var(--tavern-gold)", opacity: 0.6 }}>Глава третья</p>
-            <h2 className="font-cinzel font-bold text-4xl gold-text mb-3">Дресс-код</h2>
-            <div className="rune-divider text-center" />
-          </div>
-
-          <div className="section-card rounded-sm p-8">
-            <p className="font-cormorant italic text-xl text-center mb-8" style={{ color: "var(--tavern-parchment)", opacity: 0.7 }}>
+          <Scroll>
+            <p className="font-cinzel text-xs tracking-[0.4em] uppercase mb-2 text-center" style={{ color: "#5c3010", opacity: 0.65 }}>Глава третья</p>
+            <h2 className="font-cinzel font-bold text-3xl mb-2 text-center" style={{ color: "#3d1a05" }}>Дресс-код</h2>
+            <p className="font-cormorant italic text-xl text-center mb-6" style={{ color: "#5c3010", opacity: 0.8 }}>
               Облачитесь в цвета тёмного леса и пергаментных свитков
             </p>
-            <div className="grid grid-cols-3 gap-4">
+            <div className="grid grid-cols-3 gap-4 mb-6">
               {DRESSCODE.map((item, i) => (
                 <div key={i} className="text-center">
-                  <div className="w-16 h-16 rounded-full mx-auto mb-3 border-2"
-                    style={{ backgroundColor: item.color, borderColor: "rgba(201,147,58,0.4)", boxShadow: `0 0 20px ${item.color}44` }} />
-                  <p className="font-cinzel text-sm font-medium mb-1" style={{ color: "var(--tavern-parchment)" }}>{item.name}</p>
-                  <p className="font-cormorant italic text-base" style={{ color: "var(--tavern-parchment)", opacity: 0.5 }}>{item.desc}</p>
+                  <div className="w-14 h-14 rounded-full mx-auto mb-3 border-2"
+                    style={{ backgroundColor: item.color, borderColor: "rgba(139,90,40,0.5)", boxShadow: `0 4px 15px ${item.color}66` }} />
+                  <p className="font-cinzel text-xs font-bold mb-0.5" style={{ color: "#3d1a05" }}>{item.name}</p>
+                  <p className="font-cormorant italic text-sm" style={{ color: "#7a4a20" }}>{item.desc}</p>
                 </div>
               ))}
             </div>
-            <div className="mt-8 p-5 rounded-sm text-center" style={{ background: "rgba(45,74,53,0.3)", border: "1px solid rgba(201,147,58,0.15)" }}>
-              <Icon name="Sparkles" size={18} className="mx-auto mb-2" style={{ color: "var(--tavern-gold)" }} />
-              <p className="font-cormorant italic text-lg" style={{ color: "var(--tavern-parchment)", opacity: 0.8 }}>
-                Вы можете добавить любые средневековые аксессуары — накидки, пояса, украшения
+            <div className="p-4 rounded-sm text-center" style={{ background: "rgba(93,50,10,0.1)", border: "1px solid rgba(139,90,40,0.25)" }}>
+              <p className="font-cormorant italic text-base" style={{ color: "#5c3010" }}>
+                ✨ Можно добавить средневековые аксессуары — накидки, пояса, украшения
               </p>
             </div>
-          </div>
+          </Scroll>
         </div>
       </section>
 
       {/* ── ПОДТВЕРЖДЕНИЕ ── */}
-      <section id="confirm" className="py-20 px-4 pb-32">
+      <section id="confirm" className="py-16 px-4 pb-24">
         <div className="max-w-lg mx-auto">
-          <div className="text-center mb-14">
-            <p className="font-cinzel text-xs tracking-[0.4em] uppercase mb-4" style={{ color: "var(--tavern-gold)", opacity: 0.6 }}>Финальный свиток</p>
-            <h2 className="font-cinzel font-bold text-4xl gold-text mb-3">Ваш ответ</h2>
-            <div className="rune-divider text-center" />
-          </div>
+          <Scroll>
+            <p className="font-cinzel text-xs tracking-[0.4em] uppercase mb-2 text-center" style={{ color: "#5c3010", opacity: 0.65 }}>Финальный свиток</p>
+            <h2 className="font-cinzel font-bold text-3xl mb-2 text-center" style={{ color: "#3d1a05" }}>Ваш ответ</h2>
+            <div className="flex items-center justify-center gap-2 mb-6">
+              <div style={{ flex: 1, height: 1, background: "linear-gradient(90deg, transparent, #8b5a28, transparent)" }} />
+              <span style={{ color: "#8b5a28" }}>❧ ✦ ❧</span>
+              <div style={{ flex: 1, height: 1, background: "linear-gradient(90deg, transparent, #8b5a28, transparent)" }} />
+            </div>
 
-          <div className="section-card rounded-sm p-8">
             {submitted ? (
-              <div className="text-center py-8">
-                <div className="w-20 h-20 mx-auto mb-6 rounded-full flex items-center justify-center"
-                  style={{ background: "linear-gradient(145deg, var(--tavern-green), var(--tavern-green-light))", border: "1px solid rgba(201,147,58,0.3)" }}>
-                  <Icon name="Check" size={36} style={{ color: "var(--tavern-gold-bright)" }} />
+              <div className="text-center py-6">
+                <div className="w-20 h-20 mx-auto mb-5 rounded-full flex items-center justify-center"
+                  style={{ background: "rgba(45,74,53,0.25)", border: "2px solid rgba(45,74,53,0.5)" }}>
+                  <Icon name="Check" size={36} style={{ color: "#2d4a35" }} />
                 </div>
-                <h3 className="font-cinzel text-2xl font-bold mb-3" style={{ color: "var(--tavern-gold-bright)" }}>
+                <h3 className="font-cinzel text-2xl font-bold mb-3" style={{ color: "#3d1a05" }}>
                   Свиток получен!
                 </h3>
-                <p className="font-cormorant italic text-xl leading-relaxed" style={{ color: "var(--tavern-parchment)", opacity: 0.8 }}>
+                <p className="font-cormorant italic text-xl leading-relaxed" style={{ color: "#5c3010" }}>
                   Ваш ответ принят королевской канцелярией.<br />Ждём вас на торжестве!
                 </p>
               </div>
             ) : (
-              <form onSubmit={handleSubmit} className="space-y-6">
+              <form onSubmit={handleSubmit} className="space-y-5">
                 <div>
-                  <label className="font-cinzel text-xs tracking-widest uppercase block mb-2" style={{ color: "var(--tavern-gold)", opacity: 0.8 }}>
+                  <label className="font-cinzel text-xs tracking-widest uppercase block mb-2" style={{ color: "#5c3010", opacity: 0.85 }}>
                     Ваше имя
                   </label>
                   <input
@@ -231,18 +277,18 @@ export default function Index() {
                     onChange={e => setForm({ ...form, name: e.target.value })}
                     className="w-full px-4 py-3 rounded-sm font-cormorant text-lg outline-none transition-all"
                     style={{
-                      background: "rgba(0,0,0,0.3)",
-                      border: "1px solid rgba(201,147,58,0.3)",
-                      color: "var(--tavern-parchment)",
-                      caretColor: "var(--tavern-gold)"
+                      background: "rgba(93,50,10,0.08)",
+                      border: "1px solid rgba(139,90,40,0.4)",
+                      color: "#3d1a05",
+                      caretColor: "#6b3a18"
                     }}
-                    onFocus={e => (e.target.style.borderColor = "var(--tavern-gold)")}
-                    onBlur={e => (e.target.style.borderColor = "rgba(201,147,58,0.3)")}
+                    onFocus={e => (e.target.style.borderColor = "#8b5a28")}
+                    onBlur={e => (e.target.style.borderColor = "rgba(139,90,40,0.4)")}
                   />
                 </div>
 
                 <div>
-                  <label className="font-cinzel text-xs tracking-widest uppercase block mb-2" style={{ color: "var(--tavern-gold)", opacity: 0.8 }}>
+                  <label className="font-cinzel text-xs tracking-widest uppercase block mb-2" style={{ color: "#5c3010", opacity: 0.85 }}>
                     Присутствие
                   </label>
                   <div className="grid grid-cols-2 gap-3">
@@ -256,10 +302,10 @@ export default function Index() {
                         onClick={() => setForm({ ...form, coming: opt.val })}
                         className="py-3 px-4 rounded-sm font-cinzel text-xs tracking-wider uppercase transition-all"
                         style={{
-                          border: form.coming === opt.val ? "1px solid var(--tavern-gold)" : "1px solid rgba(201,147,58,0.25)",
-                          background: form.coming === opt.val ? "rgba(201,147,58,0.2)" : "rgba(0,0,0,0.2)",
-                          color: form.coming === opt.val ? "var(--tavern-gold-bright)" : "var(--tavern-parchment)",
-                          opacity: form.coming === opt.val ? 1 : 0.6
+                          border: form.coming === opt.val ? "1px solid #8b5a28" : "1px solid rgba(139,90,40,0.3)",
+                          background: form.coming === opt.val ? "rgba(93,50,10,0.2)" : "rgba(93,50,10,0.06)",
+                          color: form.coming === opt.val ? "#3d1a05" : "#7a4a20",
+                          fontWeight: form.coming === opt.val ? "700" : "400",
                         }}
                       >
                         {opt.label}
@@ -270,7 +316,7 @@ export default function Index() {
 
                 {form.coming === "yes" && (
                   <div>
-                    <label className="font-cinzel text-xs tracking-widest uppercase block mb-2" style={{ color: "var(--tavern-gold)", opacity: 0.8 }}>
+                    <label className="font-cinzel text-xs tracking-widest uppercase block mb-2" style={{ color: "#5c3010", opacity: 0.85 }}>
                       Количество гостей
                     </label>
                     <select
@@ -278,9 +324,9 @@ export default function Index() {
                       onChange={e => setForm({ ...form, guests: e.target.value })}
                       className="w-full px-4 py-3 rounded-sm font-cormorant text-lg outline-none"
                       style={{
-                        background: "#2a1a0e",
-                        border: "1px solid rgba(201,147,58,0.3)",
-                        color: "var(--tavern-parchment)"
+                        background: "#d4b87a",
+                        border: "1px solid rgba(139,90,40,0.4)",
+                        color: "#3d1a05"
                       }}
                     >
                       {[1, 2, 3, 4].map(n => (
@@ -291,8 +337,8 @@ export default function Index() {
                 )}
 
                 <div>
-                  <label className="font-cinzel text-xs tracking-widest uppercase block mb-2" style={{ color: "var(--tavern-gold)", opacity: 0.8 }}>
-                    Пожелания к пиру <span style={{ opacity: 0.4 }}>(необязательно)</span>
+                  <label className="font-cinzel text-xs tracking-widest uppercase block mb-2" style={{ color: "#5c3010", opacity: 0.85 }}>
+                    Пожелания к пиру <span style={{ opacity: 0.45 }}>(необязательно)</span>
                   </label>
                   <textarea
                     placeholder="Особые пожелания по меню или другие заметки..."
@@ -301,17 +347,17 @@ export default function Index() {
                     rows={3}
                     className="w-full px-4 py-3 rounded-sm font-cormorant text-lg outline-none resize-none transition-all"
                     style={{
-                      background: "rgba(0,0,0,0.3)",
-                      border: "1px solid rgba(201,147,58,0.3)",
-                      color: "var(--tavern-parchment)"
+                      background: "rgba(93,50,10,0.08)",
+                      border: "1px solid rgba(139,90,40,0.4)",
+                      color: "#3d1a05"
                     }}
-                    onFocus={e => (e.target.style.borderColor = "var(--tavern-gold)")}
-                    onBlur={e => (e.target.style.borderColor = "rgba(201,147,58,0.3)")}
+                    onFocus={e => (e.target.style.borderColor = "#8b5a28")}
+                    onBlur={e => (e.target.style.borderColor = "rgba(139,90,40,0.4)")}
                   />
                 </div>
 
                 {error && (
-                  <p className="font-cormorant text-lg text-center" style={{ color: "#e05555" }}>{error}</p>
+                  <p className="font-cormorant text-lg text-center" style={{ color: "#8b1f1f" }}>{error}</p>
                 )}
 
                 <button type="submit" disabled={loading} className="btn-tavern w-full py-4 rounded-sm text-base" style={{ opacity: loading ? 0.7 : 1 }}>
@@ -319,19 +365,21 @@ export default function Index() {
                 </button>
               </form>
             )}
-          </div>
+          </Scroll>
         </div>
       </section>
 
       {/* ── FOOTER ── */}
-      <footer className="pb-12 px-4 text-center" style={{ borderTop: "1px solid rgba(201,147,58,0.15)" }}>
-        <div className="pt-10">
-          <p className="font-cinzel text-2xl font-bold mb-2" style={{ color: "var(--tavern-gold)", opacity: 0.6 }}>К &amp; К</p>
-          <p className="font-cormorant italic text-lg" style={{ color: "var(--tavern-parchment)", opacity: 0.35 }}>
+      <footer className="pb-12 px-4 text-center">
+        <div className="pt-4">
+          <p className="font-cinzel text-2xl font-bold mb-2" style={{ color: "var(--tavern-gold)", textShadow: "0 2px 8px rgba(0,0,0,0.8)" }}>К &amp; К</p>
+          <p className="font-cormorant italic text-lg" style={{ color: "var(--tavern-parchment)", opacity: 0.5, textShadow: "0 2px 6px rgba(0,0,0,0.8)" }}>
             08 августа 2026 · НеКлуб
           </p>
         </div>
       </footer>
+
+      </div>
     </div>
   );
 }
