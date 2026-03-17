@@ -1,0 +1,44 @@
+{
+  "tests": [
+    {
+      "name": "RSVP - гость подтверждает участие",
+      "method": "POST",
+      "path": "/",
+      "body": {
+        "name": "Иван Петров",
+        "coming": "yes",
+        "guests": "2",
+        "dietary": "Вегетарианское меню"
+      },
+      "expectedStatus": 200,
+      "expectedBody": { "success": true },
+      "bodyMatcher": "partial"
+    },
+    {
+      "name": "RSVP - гость отказывается",
+      "method": "POST",
+      "path": "/",
+      "body": {
+        "name": "Мария Сидорова",
+        "coming": "no",
+        "guests": "1",
+        "dietary": ""
+      },
+      "expectedStatus": 200,
+      "expectedBody": { "success": true },
+      "bodyMatcher": "partial"
+    },
+    {
+      "name": "RSVP - ошибка без имени",
+      "method": "POST",
+      "path": "/",
+      "body": {
+        "name": "",
+        "coming": "yes"
+      },
+      "expectedStatus": 400,
+      "expectedBody": { "error": "Имя обязательно" },
+      "bodyMatcher": "partial"
+    }
+  ]
+}

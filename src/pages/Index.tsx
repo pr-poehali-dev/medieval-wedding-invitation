@@ -1,6 +1,8 @@
 import { useState } from "react";
 import Icon from "@/components/ui/icon";
 
+const RSVP_URL = "https://functions.poehali.dev/a142cd63-6a0a-4a44-aff4-d06fdbe145c3";
+
 const COAT_OF_ARMS = "https://cdn.poehali.dev/projects/0aa96c6b-dbcc-48a7-8de0-43fa7dddae32/files/ebe40a92-1060-4836-a8b7-9dede641bd38.jpg";
 
 const SCHEDULE = [
@@ -18,10 +20,30 @@ const DRESSCODE = [
 export default function Index() {
   const [form, setForm] = useState({ name: "", guests: "1", coming: "yes", dietary: "" });
   const [submitted, setSubmitted] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setSubmitted(true);
+    setLoading(true);
+    setError("");
+    try {
+      const res = await fetch(RSVP_URL, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(form),
+      });
+      const data = await res.json();
+      if (res.ok && data.success) {
+        setSubmitted(true);
+      } else {
+        setError(data.error || "Что-то пошло не так. Попробуй ещё раз.");
+      }
+    } catch {
+      setError("Не удалось отправить свиток. Проверь соединение.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -288,8 +310,12 @@ export default function Index() {
                   />
                 </div>
 
-                <button type="submit" className="btn-tavern w-full py-4 rounded-sm text-base">
-                  Отправить свиток
+                {error && (
+                  <p className="font-cormorant text-lg text-center" style={{ color: "#e05555" }}>{error}</p>
+                )}
+
+                <button type="submit" disabled={loading} className="btn-tavern w-full py-4 rounded-sm text-base" style={{ opacity: loading ? 0.7 : 1 }}>
+                  {loading ? "Отправляем свиток..." : "Отправить свиток"}
                 </button>
               </form>
             )}
