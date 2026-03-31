@@ -269,6 +269,11 @@ export default function Index() {
                 🌿 Будем очень признательны, если вы откажетесь от цветов
               </p>
             </div>
+            <div className="mt-4 p-4 rounded-sm" style={{ background: "rgba(139,31,31,0.12)", border: "1px solid rgba(139,31,31,0.35)" }}>
+              <p className="font-cormorant italic text-base leading-relaxed" style={{ color: "var(--tavern-parchment)", opacity: 0.85 }}>
+                🍷 Просим обойтись без возгласов "Горько" — поцелуев у нас и так будет достаточно. Благодарим за понимание!
+              </p>
+            </div>
           </Scroll>
         </div>
       </section>
@@ -376,7 +381,7 @@ export default function Index() {
                     Пожелания к пиру <span style={{ opacity: 0.45 }}>(необязательно)</span>
                   </label>
                   <textarea
-                    placeholder="Особые пожелания по меню или другие заметки..."
+                    placeholder="Ваши предпочтения по напиткам и алкоголю, пожелания по меню..."
                     value={form.dietary}
                     onChange={e => setForm({ ...form, dietary: e.target.value })}
                     rows={3}
