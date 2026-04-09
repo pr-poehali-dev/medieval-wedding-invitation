@@ -10,7 +10,7 @@ const UPLOAD_IMAGE = "https://cdn.poehali.dev/files/9aeea03a-688b-46bb-8d46-ab86
 const SCHEDULE = [
   { time: "12:00", icon: "Crown", title: "Церемония в ЗАГСе", desc: "Торжественная регистрация союза" },
   { time: "13:00", icon: "Camera", title: "Фотосессия", desc: "Сохраним воспоминания для летописи" },
-  { time: "15:00", icon: "Wine", title: "Пир в НеКлубе", desc: "Ул. Коммуны, 14 — начало торжества" },
+  { time: "16:00", icon: "Wine", title: "Пир в НеКлубе", desc: "Ул. Коммуны, 14 — начало торжества" },
   { time: "23:00", icon: "Moon", title: "Завершение", desc: "Конец торжества, расставание до новых встреч" },
 ];
 
@@ -261,7 +261,7 @@ export default function Index() {
               <span style={{ color: "var(--tavern-gold)", fontSize: "0.9rem" }}>❧ ✦ ❧</span>
               <div style={{ flex: 1, height: 1, background: "linear-gradient(90deg, transparent, rgba(201,147,58,0.5), transparent)" }} />
             </div>
-            <p className="font-cormorant italic text-lg leading-relaxed mb-4" style={{ color: "var(--tavern-parchment)", opacity: 0.75 }}>
+            <p className="font-cormorant text-lg leading-relaxed mb-4" style={{ color: "var(--tavern-parchment)", opacity: 0.95 }}>
               А если вы захотите порадовать нас подарком, мы с благодарностью примем денежный вклад.
             </p>
             <div className="p-4 rounded-sm" style={{ background: "rgba(201,147,58,0.08)", border: "1px solid rgba(201,147,58,0.2)" }}>
