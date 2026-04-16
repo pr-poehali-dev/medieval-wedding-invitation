@@ -204,7 +204,7 @@ export default function Index() {
             </p>
             <div className="flex items-center justify-center gap-3 mb-4">
               <div style={{ flex: 1, height: 1, background: "linear-gradient(90deg, transparent, rgba(201,147,58,0.5), transparent)" }} />
-              <span className="font-cormorant text-base" style={{ color: "var(--tavern-parchment)", opacity: 0.7 }}>Начало торжества в 15:00</span>
+              <span className="font-cormorant text-base" style={{ color: "var(--tavern-parchment)", opacity: 0.7 }}>Начало торжества в 16:00</span>
               <div style={{ flex: 1, height: 1, background: "linear-gradient(90deg, transparent, rgba(201,147,58,0.5), transparent)" }} />
             </div>
             <p className="font-cormorant text-lg leading-relaxed" style={{ color: "var(--tavern-parchment)", opacity: 0.65 }}>
