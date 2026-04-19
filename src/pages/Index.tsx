@@ -51,7 +51,7 @@ const Scroll = ({ children, className = "" }: { children: React.ReactNode; class
 );
 
 export default function Index() {
-  const [form, setForm] = useState({ name: "", guests: "1", coming: "yes", dietary: "" });
+  const [form, setForm] = useState({ name: "", guests: "1", coming: "yes", attendance: "", dietary: "" });
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
@@ -357,6 +357,35 @@ export default function Index() {
                     ))}
                   </div>
                 </div>
+
+                {form.coming === "yes" && (
+                  <div>
+                    <label className="font-cinzel text-xs tracking-widest uppercase block mb-2" style={{ color: "var(--tavern-gold)", opacity: 0.85 }}>
+                      Куда вы придёте?
+                    </label>
+                    <div className="flex flex-col gap-3 mb-0">
+                      {[
+                        { val: "ceremony", label: "Буду на церемонии в ЗАГСе" },
+                        { val: "feast", label: "Присоединюсь к пиру в НеКлубе" },
+                      ].map(opt => (
+                        <button
+                          key={opt.val}
+                          type="button"
+                          onClick={() => setForm({ ...form, attendance: opt.val })}
+                          className="py-3 px-4 rounded-sm font-cinzel text-xs tracking-wider uppercase transition-all text-left"
+                          style={{
+                            border: form.attendance === opt.val ? "1px solid var(--tavern-gold)" : "1px solid rgba(201,147,58,0.25)",
+                            background: form.attendance === opt.val ? "rgba(201,147,58,0.2)" : "rgba(0,0,0,0.2)",
+                            color: form.attendance === opt.val ? "var(--tavern-gold-bright)" : "var(--tavern-parchment)",
+                            opacity: form.attendance === opt.val ? 1 : 0.6,
+                          }}
+                        >
+                          {opt.label}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                )}
 
                 {form.coming === "yes" && (
                   <div>

@@ -30,6 +30,7 @@ def handler(event: dict, context) -> dict:
     name = body.get("name", "").strip()
     coming = body.get("coming", "yes")
     guests = body.get("guests", "1")
+    attendance = body.get("attendance", "").strip()
     dietary = body.get("dietary", "").strip()
 
     if not name:
@@ -44,6 +45,8 @@ def handler(event: dict, context) -> dict:
 
     coming_text = "✅ Придёт" if coming == "yes" else "❌ Не сможет прийти"
     guests_text = f"{guests} чел." if coming == "yes" else "—"
+    attendance_map = {"ceremony": "Церемония в ЗАГСе + пир", "feast": "Только пир в НеКлубе"}
+    attendance_text = attendance_map.get(attendance, "—")
 
     html_body = f"""
     <div style="font-family: Georgia, serif; max-width: 600px; margin: 0 auto; background: #1a0e06; color: #e8d5b0; padding: 30px; border-radius: 8px;">
@@ -63,6 +66,7 @@ def handler(event: dict, context) -> dict:
           <td style="padding: 10px 0; color: #c9933a; font-size: 13px; text-transform: uppercase; letter-spacing: 2px;">Количество</td>
           <td style="padding: 10px 0; font-size: 18px;">{guests_text}</td>
         </tr>
+        {"<tr><td style='padding: 10px 0; color: #c9933a; font-size: 13px; text-transform: uppercase; letter-spacing: 2px;'>Участие</td><td style='padding: 10px 0; font-size: 18px;'>" + attendance_text + "</td></tr>" if coming == "yes" else ""}
         {"<tr><td style='padding: 10px 0; color: #c9933a; font-size: 13px; text-transform: uppercase; letter-spacing: 2px; vertical-align: top;'>Пожелания</td><td style='padding: 10px 0; font-size: 16px;'>" + dietary + "</td></tr>" if dietary else ""}
       </table>
       <p style="margin-top: 30px; color: rgba(232,213,176,0.4); font-size: 13px; border-top: 1px solid rgba(201,147,58,0.2); padding-top: 15px;">
