@@ -8,8 +8,9 @@ const BG_IMAGE = "https://cdn.poehali.dev/projects/0aa96c6b-dbcc-48a7-8de0-43fa7
 const UPLOAD_IMAGE = "https://cdn.poehali.dev/files/9aeea03a-688b-46bb-8d46-ab864093fb7c.png";
 
 const SCHEDULE = [
-  { time: "12:00", icon: "Crown", title: "Церемония в ЗАГСе", desc: "Торжественная регистрация союза" },
-  { time: "13:00", icon: "Camera", title: "Фотосессия", desc: "Сохраним воспоминания для летописи" },
+  { time: "12:00", icon: "Users", title: "Сбор гостей", desc: "Встречаемся и готовимся к торжеству" },
+  { time: "12:20", icon: "Crown", title: "Церемония в ЗАГСе", desc: "Торжественная регистрация союза" },
+  { time: "13:30", icon: "Camera", title: "Фотосессия", desc: "Сохраним воспоминания для летописи" },
   { time: "16:00", icon: "Wine", title: "Пир в НеКлубе", desc: "Ул. Коммуны, 14 — начало торжества" },
   { time: "23:00", icon: "Moon", title: "Завершение", desc: "Конец торжества, расставание до новых встреч" },
 ];
