@@ -15,9 +15,12 @@ const SCHEDULE = [
 ];
 
 const DRESSCODE = [
-  { color: "#6b4c3b", name: "Коричневый", desc: "Цвет дерева и земли" },
-  { color: "#c9b99a", name: "Бежевый", desc: "Цвет пергамента и песка" },
-  { color: "#2d4a35", name: "Тёмно-зелёный", desc: "Цвет леса и мха" },
+  { color: "#BD5B30", name: "Red Sands", desc: "Цвет красных песков" },
+  { color: "#CFA96E", name: "Pollen", desc: "Цвет золотой пыльцы" },
+  { color: "#ECE1C9", name: "Birch Paper", desc: "Цвет берёзовой бумаги" },
+  { color: "#793828", name: "Dried Petals", desc: "Цвет сухих лепестков" },
+  { color: "#514C34", name: "Olive Sage", desc: "Цвет оливковой зелени" },
+  { color: "#342B22", name: "Charcoal", desc: "Цвет угля и тени" },
 ];
 
 /* Пергаментная карточка */
