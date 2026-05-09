@@ -2,6 +2,7 @@ import { useState } from "react";
 import Icon from "@/components/ui/icon";
 
 const RSVP_URL = "https://functions.poehali.dev/a142cd63-6a0a-4a44-aff4-d06fdbe145c3";
+const UPLOAD_URL = "https://functions.poehali.dev/d83e2ed5-63e7-404f-b3a0-131d292f9de0";
 
 const COAT_OF_ARMS = "https://cdn.poehali.dev/files/11132bad-4d83-437f-9f39-808d338f5e21.png";
 const BG_IMAGE = "https://cdn.poehali.dev/projects/0aa96c6b-dbcc-48a7-8de0-43fa7dddae32/files/44d52ba6-e484-41f6-8fce-4c03d0fc95d0.jpg";
@@ -55,6 +56,43 @@ export default function Index() {
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+
+  const [uploadName, setUploadName] = useState("");
+  const [uploadFile, setUploadFile] = useState<File | null>(null);
+  const [uploadLoading, setUploadLoading] = useState(false);
+  const [uploadError, setUploadError] = useState("");
+  const [uploadDone, setUploadDone] = useState(false);
+
+  const handleUpload = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!uploadFile) return;
+    setUploadLoading(true);
+    setUploadError("");
+    try {
+      const arrayBuffer = await uploadFile.arrayBuffer();
+      const base64 = btoa(String.fromCharCode(...new Uint8Array(arrayBuffer)));
+      const res = await fetch(UPLOAD_URL, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: uploadName || "Гость",
+          file: base64,
+          contentType: uploadFile.type,
+          fileName: uploadFile.name,
+        }),
+      });
+      const data = await res.json();
+      if (res.ok && data.success) {
+        setUploadDone(true);
+      } else {
+        setUploadError(data.error || "Что-то пошло не так. Попробуй ещё раз.");
+      }
+    } catch {
+      setUploadError("Не удалось отправить файл. Проверь соединение.");
+    } finally {
+      setUploadLoading(false);
+    }
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -435,6 +473,121 @@ export default function Index() {
 
                 <button type="submit" disabled={loading} className="btn-tavern w-full py-4 rounded-sm text-base" style={{ opacity: loading ? 0.7 : 1 }}>
                   {loading ? "Отправляем свиток..." : "Отправить свиток"}
+                </button>
+              </form>
+            )}
+          </Scroll>
+        </div>
+      </section>
+
+      {/* ── ЗАГРУЗКА МЕДИА ── */}
+      <section id="media" className="py-16 px-4 pb-24">
+        <div className="max-w-lg mx-auto">
+          <Scroll>
+            <p className="font-cinzel text-xs tracking-[0.4em] uppercase mb-2 text-center" style={{ color: "var(--tavern-gold)", opacity: 0.65 }}>Летопись торжества</p>
+            <h2 className="font-cinzel font-bold text-3xl mb-2 text-center" style={{ color: "var(--tavern-gold-bright)" }}>Поделитесь воспоминаниями</h2>
+            <div className="flex items-center justify-center gap-2 mb-6">
+              <div style={{ flex: 1, height: 1, background: "linear-gradient(90deg, transparent, rgba(201,147,58,0.5), transparent)" }} />
+              <span style={{ color: "var(--tavern-gold)" }}>❧ ✦ ❧</span>
+              <div style={{ flex: 1, height: 1, background: "linear-gradient(90deg, transparent, rgba(201,147,58,0.5), transparent)" }} />
+            </div>
+            <p className="font-cormorant italic text-lg text-center mb-6 leading-relaxed" style={{ color: "var(--tavern-parchment)", opacity: 0.75 }}>
+              Отправьте ваши фотографии и видео с торжества — мы сохраним их в нашей летописи
+            </p>
+
+            {uploadDone ? (
+              <div className="text-center py-6">
+                <div className="w-20 h-20 mx-auto mb-5 rounded-full flex items-center justify-center"
+                  style={{ background: "rgba(201,147,58,0.15)", border: "2px solid rgba(201,147,58,0.4)" }}>
+                  <Icon name="Heart" size={36} style={{ color: "var(--tavern-gold-bright)" }} />
+                </div>
+                <h3 className="font-cinzel text-2xl font-bold mb-3" style={{ color: "var(--tavern-gold-bright)" }}>
+                  Получено!
+                </h3>
+                <p className="font-cormorant italic text-xl leading-relaxed" style={{ color: "var(--tavern-parchment)", opacity: 0.85 }}>
+                  Ваш файл добавлен в летопись торжества.<br />Спасибо за этот момент!
+                </p>
+                <button
+                  onClick={() => { setUploadDone(false); setUploadFile(null); setUploadName(""); }}
+                  className="mt-6 font-cinzel text-xs tracking-widest uppercase"
+                  style={{ color: "var(--tavern-gold)", opacity: 0.7 }}
+                >
+                  Отправить ещё
+                </button>
+              </div>
+            ) : (
+              <form onSubmit={handleUpload} className="space-y-5">
+                <div>
+                  <label className="font-cinzel text-xs tracking-widest uppercase block mb-2" style={{ color: "var(--tavern-gold)", opacity: 0.85 }}>
+                    Ваше имя
+                  </label>
+                  <input
+                    type="text"
+                    placeholder="Как вас называть?"
+                    value={uploadName}
+                    onChange={e => setUploadName(e.target.value)}
+                    className="w-full px-4 py-3 rounded-sm font-cormorant text-lg outline-none transition-all"
+                    style={{
+                      background: "rgba(0,0,0,0.3)",
+                      border: "1px solid rgba(201,147,58,0.3)",
+                      color: "var(--tavern-parchment)",
+                      caretColor: "var(--tavern-gold)",
+                    }}
+                    onFocus={e => (e.target.style.borderColor = "var(--tavern-gold)")}
+                    onBlur={e => (e.target.style.borderColor = "rgba(201,147,58,0.3)")}
+                  />
+                </div>
+
+                <div>
+                  <label className="font-cinzel text-xs tracking-widest uppercase block mb-2" style={{ color: "var(--tavern-gold)", opacity: 0.85 }}>
+                    Фото или видео
+                  </label>
+                  <label
+                    className="flex flex-col items-center justify-center w-full py-8 px-4 rounded-sm cursor-pointer transition-all"
+                    style={{
+                      border: uploadFile ? "1px solid var(--tavern-gold)" : "1px dashed rgba(201,147,58,0.4)",
+                      background: uploadFile ? "rgba(201,147,58,0.1)" : "rgba(0,0,0,0.2)",
+                    }}
+                  >
+                    <input
+                      type="file"
+                      accept="image/jpeg,image/png,image/gif,image/webp,video/mp4,video/quicktime,video/x-msvideo,video/webm"
+                      className="hidden"
+                      onChange={e => setUploadFile(e.target.files?.[0] || null)}
+                    />
+                    {uploadFile ? (
+                      <>
+                        <Icon name={uploadFile.type.startsWith("video/") ? "Film" : "Image"} size={32} style={{ color: "var(--tavern-gold-bright)" }} />
+                        <p className="font-cormorant text-lg mt-2 text-center" style={{ color: "var(--tavern-parchment)" }}>{uploadFile.name}</p>
+                        <p className="font-cinzel text-xs mt-1" style={{ color: "var(--tavern-gold)", opacity: 0.6 }}>
+                          {(uploadFile.size / (1024 * 1024)).toFixed(1)} МБ
+                        </p>
+                      </>
+                    ) : (
+                      <>
+                        <Icon name="Upload" size={32} style={{ color: "var(--tavern-gold)", opacity: 0.5 }} />
+                        <p className="font-cormorant italic text-lg mt-2" style={{ color: "var(--tavern-parchment)", opacity: 0.6 }}>
+                          Нажмите, чтобы выбрать файл
+                        </p>
+                        <p className="font-cinzel text-xs mt-1" style={{ color: "var(--tavern-gold)", opacity: 0.4 }}>
+                          JPG, PNG, GIF, WEBP, MP4, MOV · до 50 МБ
+                        </p>
+                      </>
+                    )}
+                  </label>
+                </div>
+
+                {uploadError && (
+                  <p className="font-cormorant text-lg text-center" style={{ color: "#8b1f1f" }}>{uploadError}</p>
+                )}
+
+                <button
+                  type="submit"
+                  disabled={uploadLoading || !uploadFile}
+                  className="btn-tavern w-full py-4 rounded-sm text-base"
+                  style={{ opacity: (uploadLoading || !uploadFile) ? 0.5 : 1 }}
+                >
+                  {uploadLoading ? "Отправляем..." : "Отправить в летопись"}
                 </button>
               </form>
             )}

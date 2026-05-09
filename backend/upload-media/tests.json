@@ -1,0 +1,28 @@
+{
+  "tests": [
+    {
+      "name": "OPTIONS preflight",
+      "method": "OPTIONS",
+      "path": "/",
+      "expectedStatus": 200
+    },
+    {
+      "name": "Ошибка — файл не передан",
+      "method": "POST",
+      "path": "/",
+      "body": { "name": "Тест", "file": "", "contentType": "image/jpeg", "fileName": "test.jpg" },
+      "expectedStatus": 400,
+      "expectedBody": { "error": "Файл не передан" },
+      "bodyMatcher": "partial"
+    },
+    {
+      "name": "Ошибка — недопустимый тип файла",
+      "method": "POST",
+      "path": "/",
+      "body": { "name": "Тест", "file": "aGVsbG8=", "contentType": "application/pdf", "fileName": "doc.pdf" },
+      "expectedStatus": 400,
+      "expectedBody": { "error": "Недопустимый тип файла" },
+      "bodyMatcher": "partial"
+    }
+  ]
+}
