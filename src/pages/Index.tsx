@@ -58,28 +58,20 @@ export default function Index() {
   const [error, setError] = useState("");
 
   const [uploadName, setUploadName] = useState("");
-  const [uploadFile, setUploadFile] = useState<File | null>(null);
+  const [uploadLink, setUploadLink] = useState("");
   const [uploadLoading, setUploadLoading] = useState(false);
   const [uploadError, setUploadError] = useState("");
   const [uploadDone, setUploadDone] = useState(false);
 
   const handleUpload = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!uploadFile) return;
     setUploadLoading(true);
     setUploadError("");
     try {
-      const arrayBuffer = await uploadFile.arrayBuffer();
-      const base64 = btoa(String.fromCharCode(...new Uint8Array(arrayBuffer)));
       const res = await fetch(UPLOAD_URL, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          name: uploadName || "Гость",
-          file: base64,
-          contentType: uploadFile.type,
-          fileName: uploadFile.name,
-        }),
+        body: JSON.stringify({ name: uploadName, link: uploadLink }),
       });
       const data = await res.json();
       if (res.ok && data.success) {
@@ -88,7 +80,7 @@ export default function Index() {
         setUploadError(data.error || "Что-то пошло не так. Попробуй ещё раз.");
       }
     } catch {
-      setUploadError("Не удалось отправить файл. Проверь соединение.");
+      setUploadError("Не удалось отправить. Проверь соединение.");
     } finally {
       setUploadLoading(false);
     }
@@ -523,6 +515,7 @@ export default function Index() {
                   </label>
                   <input
                     type="text"
+                    required
                     placeholder="Как вас называть?"
                     value={uploadName}
                     onChange={e => setUploadName(e.target.value)}
@@ -540,41 +533,27 @@ export default function Index() {
 
                 <div>
                   <label className="font-cinzel text-xs tracking-widest uppercase block mb-2" style={{ color: "var(--tavern-gold)", opacity: 0.85 }}>
-                    Фото или видео
+                    Ссылка на файлы
                   </label>
-                  <label
-                    className="flex flex-col items-center justify-center w-full py-8 px-4 rounded-sm cursor-pointer transition-all"
+                  <input
+                    type="url"
+                    required
+                    placeholder="https://drive.google.com/..."
+                    value={uploadLink}
+                    onChange={e => setUploadLink(e.target.value)}
+                    className="w-full px-4 py-3 rounded-sm font-cormorant text-lg outline-none transition-all"
                     style={{
-                      border: uploadFile ? "1px solid var(--tavern-gold)" : "1px dashed rgba(201,147,58,0.4)",
-                      background: uploadFile ? "rgba(201,147,58,0.1)" : "rgba(0,0,0,0.2)",
+                      background: "rgba(0,0,0,0.3)",
+                      border: "1px solid rgba(201,147,58,0.3)",
+                      color: "var(--tavern-parchment)",
+                      caretColor: "var(--tavern-gold)",
                     }}
-                  >
-                    <input
-                      type="file"
-                      accept="image/jpeg,image/png,image/gif,image/webp,video/mp4,video/quicktime,video/x-msvideo,video/webm"
-                      className="hidden"
-                      onChange={e => setUploadFile(e.target.files?.[0] || null)}
-                    />
-                    {uploadFile ? (
-                      <>
-                        <Icon name={uploadFile.type.startsWith("video/") ? "Film" : "Image"} size={32} style={{ color: "var(--tavern-gold-bright)" }} />
-                        <p className="font-cormorant text-lg mt-2 text-center" style={{ color: "var(--tavern-parchment)" }}>{uploadFile.name}</p>
-                        <p className="font-cinzel text-xs mt-1" style={{ color: "var(--tavern-gold)", opacity: 0.6 }}>
-                          {(uploadFile.size / (1024 * 1024)).toFixed(1)} МБ
-                        </p>
-                      </>
-                    ) : (
-                      <>
-                        <Icon name="Upload" size={32} style={{ color: "var(--tavern-gold)", opacity: 0.5 }} />
-                        <p className="font-cormorant italic text-lg mt-2" style={{ color: "var(--tavern-parchment)", opacity: 0.6 }}>
-                          Нажмите, чтобы выбрать файл
-                        </p>
-                        <p className="font-cinzel text-xs mt-1" style={{ color: "var(--tavern-gold)", opacity: 0.4 }}>
-                          JPG, PNG, GIF, WEBP, MP4, MOV · до 50 МБ
-                        </p>
-                      </>
-                    )}
-                  </label>
+                    onFocus={e => (e.target.style.borderColor = "var(--tavern-gold)")}
+                    onBlur={e => (e.target.style.borderColor = "rgba(201,147,58,0.3)")}
+                  />
+                  <p className="font-cormorant italic text-base mt-2" style={{ color: "var(--tavern-parchment)", opacity: 0.45 }}>
+                    Google Диск, Яндекс Диск, iCloud, Dropbox и любые другие
+                  </p>
                 </div>
 
                 {uploadError && (
@@ -583,11 +562,11 @@ export default function Index() {
 
                 <button
                   type="submit"
-                  disabled={uploadLoading || !uploadFile}
+                  disabled={uploadLoading}
                   className="btn-tavern w-full py-4 rounded-sm text-base"
-                  style={{ opacity: (uploadLoading || !uploadFile) ? 0.5 : 1 }}
+                  style={{ opacity: uploadLoading ? 0.5 : 1 }}
                 >
-                  {uploadLoading ? "Отправляем..." : "Отправить в летопись"}
+                  {uploadLoading ? "Отправляем..." : "Передать сюрприз"}
                 </button>
               </form>
             )}

@@ -7,21 +7,21 @@
       "expectedStatus": 200
     },
     {
-      "name": "Ошибка — файл не передан",
+      "name": "Ошибка — имя не указано",
       "method": "POST",
       "path": "/",
-      "body": { "name": "Тест", "file": "", "contentType": "image/jpeg", "fileName": "test.jpg" },
+      "body": { "name": "", "link": "https://drive.google.com/abc" },
       "expectedStatus": 400,
-      "expectedBody": { "error": "Файл не передан" },
+      "expectedBody": { "error": "Укажите ваше имя" },
       "bodyMatcher": "partial"
     },
     {
-      "name": "Ошибка — недопустимый тип файла",
+      "name": "Ошибка — ссылка не указана",
       "method": "POST",
       "path": "/",
-      "body": { "name": "Тест", "file": "aGVsbG8=", "contentType": "application/pdf", "fileName": "doc.pdf" },
+      "body": { "name": "Тест", "link": "" },
       "expectedStatus": 400,
-      "expectedBody": { "error": "Недопустимый тип файла" },
+      "expectedBody": { "error": "Вставьте ссылку на файлы" },
       "bodyMatcher": "partial"
     }
   ]
