@@ -484,15 +484,15 @@ export default function Index() {
       <section id="media" className="py-16 px-4 pb-24">
         <div className="max-w-lg mx-auto">
           <Scroll>
-            <p className="font-cinzel text-xs tracking-[0.4em] uppercase mb-2 text-center" style={{ color: "var(--tavern-gold)", opacity: 0.65 }}>Летопись торжества</p>
-            <h2 className="font-cinzel font-bold text-3xl mb-2 text-center" style={{ color: "var(--tavern-gold-bright)" }}>Поделитесь воспоминаниями</h2>
+            <p className="font-cinzel text-xs tracking-[0.4em] uppercase mb-2 text-center" style={{ color: "var(--tavern-gold)", opacity: 0.65 }}>Тайный свиток</p>
+            <h2 className="font-cinzel font-bold text-3xl mb-2 text-center" style={{ color: "var(--tavern-gold-bright)" }}>Сюрприз для молодожёнов</h2>
             <div className="flex items-center justify-center gap-2 mb-6">
               <div style={{ flex: 1, height: 1, background: "linear-gradient(90deg, transparent, rgba(201,147,58,0.5), transparent)" }} />
               <span style={{ color: "var(--tavern-gold)" }}>❧ ✦ ❧</span>
               <div style={{ flex: 1, height: 1, background: "linear-gradient(90deg, transparent, rgba(201,147,58,0.5), transparent)" }} />
             </div>
             <p className="font-cormorant italic text-lg text-center mb-6 leading-relaxed" style={{ color: "var(--tavern-parchment)", opacity: 0.75 }}>
-              Отправьте ваши фотографии и видео с торжества — мы сохраним их в нашей летописи
+              Отправьте смешные фото, совместные снимки или видео-поздравление — это станет тайным подарком для Катерины и Кирилла
             </p>
 
             {uploadDone ? (
@@ -505,7 +505,7 @@ export default function Index() {
                   Получено!
                 </h3>
                 <p className="font-cormorant italic text-xl leading-relaxed" style={{ color: "var(--tavern-parchment)", opacity: 0.85 }}>
-                  Ваш файл добавлен в летопись торжества.<br />Спасибо за этот момент!
+                  Ваш сюрприз тайно доставлен молодожёнам.<br />Они будут в восторге!
                 </p>
                 <button
                   onClick={() => { setUploadDone(false); setUploadFile(null); setUploadName(""); }}

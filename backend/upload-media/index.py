@@ -110,7 +110,7 @@ def handler(event: dict, context) -> dict:
     html_body = f"""
     <div style="font-family: Georgia, serif; max-width: 600px; margin: 0 auto; background: #1a0e06; color: #e8d5b0; padding: 30px; border-radius: 8px;">
       <h2 style="color: #e8b84b; font-family: Georgia, serif; border-bottom: 1px solid rgba(201,147,58,0.3); padding-bottom: 15px;">
-        {icon} Новый {media_label} от гостя
+        {icon} Сюрприз-{media_label} от {sender_name}
       </h2>
       <table style="width: 100%; border-collapse: collapse; margin-top: 20px;">
         <tr>
@@ -135,7 +135,7 @@ def handler(event: dict, context) -> dict:
     """
 
     msg = MIMEMultipart("alternative")
-    msg["Subject"] = f"{icon} {media_label.capitalize()} от {sender_name} — свадьба Катерины и Кирилла"
+    msg["Subject"] = f"{icon} Сюрприз от {sender_name} — {media_label} для молодожёнов"
     msg["From"] = email_address
     msg["To"] = media_email
     msg.attach(MIMEText(html_body, "html", "utf-8"))
