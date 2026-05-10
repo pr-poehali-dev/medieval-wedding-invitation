@@ -21,8 +21,8 @@ export default {
 		},
 		extend: {
 			fontFamily: {
-				cinzel: ['Uncial Antiqua', 'serif'],
-				cormorant: ['IM Fell English', 'Georgia', 'serif'],
+				cinzel: ['Cinzel', 'serif'],
+				cormorant: ['Cinzel', 'Georgia', 'serif'],
 			},
 			colors: {
 				border: 'hsl(var(--border))',
