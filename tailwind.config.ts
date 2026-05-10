@@ -21,8 +21,8 @@ export default {
 		},
 		extend: {
 			fontFamily: {
-				cinzel: ['Piazzolla', 'serif'],
-				cormorant: ['EB Garamond', 'Georgia', 'serif'],
+				cinzel: ['Uncial Antiqua', 'serif'],
+				cormorant: ['IM Fell English', 'Georgia', 'serif'],
 			},
 			colors: {
 				border: 'hsl(var(--border))',
